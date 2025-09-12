@@ -1,0 +1,21 @@
+pip install diffusers transformers torch accelerate
+
+
+
+git lfs install
+git clone https://huggingface.co/<username>/<model-name>
+
+
+
+
+git lfs install
+
+git clone https://huggingface.co/stabilityai/stable-diffusion-v1-5
+git clone https://huggingface.co/kandinsky-community/kandinsky-2-2-decoder
+
+
+обновить модели
+cd stable-diffusion-v1-5
+git pull
+git lfs pull
+
