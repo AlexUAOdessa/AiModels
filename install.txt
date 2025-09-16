@@ -1,0 +1,13 @@
+pip install huggingface_hub
+
+
+
+from huggingface_hub import snapshot_download
+
+# Скачиваем модель в папку ./models/parler-tts-large
+local_dir = snapshot_download("parler-tts/parler-tts-large", local_dir="./models/parler-tts-large")
+print("Модель сохранена в:", local_dir)
+
+
+
+snapshot_download("parler-tts/parler-tts-mini", local_dir="./models/parler-tts-mini")

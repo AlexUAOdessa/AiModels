@@ -2,6 +2,7 @@ import torch
 from diffusers import KandinskyV22PriorPipeline, KandinskyV22Pipeline
 from PIL import Image
 import os
+import time
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 dtype = torch.float16 if torch.cuda.is_available() else torch.float32
@@ -11,10 +12,12 @@ model_paths = {
     "decoder": "./kandinsky-2-2-decoder",
 }
 
-prompt = "A smartphone with ears is lying on the table by itself"
+prompt = "Internal combustion engine: gasoline, diesel, rotary, and Stirling, cross-sectioned and synchronized by phases."
 negative_prompt = "low resolution, blurry, bad anatomy"
 
 # === PRIOR ===
+print("🚀 Running PRIOR...")
+t0 = time.time()
 pipe_prior = KandinskyV22PriorPipeline.from_pretrained(
     model_paths["prior"], dtype=dtype
 ).to(device)
@@ -27,8 +30,10 @@ out = pipe_prior(
 )
 image_embeds = out.image_embeds
 negative_image_embeds = out.negative_image_embeds
+print(f"⏱ PRIOR finished in {time.time() - t0:.2f} sec")
 
 # === DECODER ===
+print("🚀 Running DECODER...")
 pipe_decoder = KandinskyV22Pipeline.from_pretrained(
     model_paths["decoder"], dtype=dtype
 ).to(device)
@@ -38,6 +43,7 @@ os.makedirs("outputs", exist_ok=True)
 
 num_variants = 3
 for i in range(1, num_variants + 1):
+    t1 = time.time()
     image = pipe_decoder(
         image_embeds=image_embeds,
         negative_image_embeds=negative_image_embeds,
@@ -47,6 +53,7 @@ for i in range(1, num_variants + 1):
         num_inference_steps=50
     ).images[0]
     
+    dt = time.time() - t1
     output_path = f"outputs/kandinsky_out_{i}.png"
     image.save(output_path)
-    print(f"✅ Saved image to {output_path}")
+    print(f"✅ Saved image to {output_path} (⏱ {dt:.2f} sec)")

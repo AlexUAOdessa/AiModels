@@ -18,7 +18,7 @@ model_paths = {
 }
 
 # prompt = "A spaceship is flying toward a black hole"
-prompt = "A fantasy landscape with castles and dragons, artstation"
+prompt = "A smartphone with ears is lying on the table by itself"
 negative_prompt = "low resolution, blurry, bad anatomy"
 
 # === PRIOR ===
@@ -43,8 +43,8 @@ pipe = KandinskyV22Pipeline.from_pretrained(
 image = pipe(
     image_embeds=image_embeds,
     negative_image_embeds=negative_image_embeds,
-    height=512,
-    width=512,
+    height=1024,
+    width=1024,
     guidance_scale=7.5,
     num_inference_steps=50
 ).images[0]

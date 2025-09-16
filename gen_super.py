@@ -11,7 +11,7 @@ model_paths = {
     "decoder": "./kandinsky-2-2-decoder",
 }
 
-prompt = "A smartphone with ears is lying on the table by itself"
+prompt = "Internal combustion engine: gasoline, diesel, rotary, and Stirling, cross-sectioned and synchronized by phases."
 negative_prompt = "low resolution, blurry, bad anatomy"
 
 # === PRIOR ===
